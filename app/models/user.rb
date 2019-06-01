@@ -14,4 +14,11 @@ class User < ApplicationRecord
   # この一行でセキュアにハッシュ化したパスワードを、データベース内のpassword_digestという属性に保存できるようになる
   has_secure_password
   validates(:password,  { presence: true, length: { minimum: 6 } })
+  
+  # 渡された文字列のハッシュ値を返す
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
 end

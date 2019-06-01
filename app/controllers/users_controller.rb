@@ -13,10 +13,13 @@ class UsersController < ApplicationController
     # params[:user]で不要な属性を受け取らないようにする
     @user = User.new(user_params)
     if @user.save
+      
+      log_in(@user)
+      
       flash[:success] = "Welcome to the Sample App!"
       
       # same: redirect_to user_url(@user)
-      redirect_to @user
+      redirect_to(user_path(@user))
     else 
       render('new')
     end
