@@ -4,6 +4,9 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
+  def setup
+    @user = users(:michael)
+  end
   
   test "invalid signup information" do
     get signup_path
