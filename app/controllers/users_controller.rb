@@ -6,12 +6,13 @@ class UsersController < ApplicationController
   
   def index
     # per_page: default 30
-    @users = User.paginate(page: params[:page], per_page: 20)
+    @users = User.where(activated: true).paginate(page: params[:page], per_page: 20)
   end
   
   def show
     # params[:id]により、url
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated
   end
   
   def new
@@ -23,13 +24,9 @@ class UsersController < ApplicationController
     # params[:user]で不要な属性を受け取らないようにする
     @user = User.new(user_params)
     if @user.save
-      
-      log_in(@user)
-      
-      flash[:success] = "Welcome to the Sample App!"
-      
-      # same: redirect_to user_url(@user)
-      redirect_to(user_path(@user))
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else 
       render('new')
     end
@@ -38,6 +35,9 @@ class UsersController < ApplicationController
   
   
   def edit
+    
+    
+    
     
   end
   
