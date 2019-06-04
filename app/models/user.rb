@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   
+  # 複数形
+  has_many :microposts, { dependent: :destroy }
   attr_accessor :remember_token, :activation_token, :reset_token
   
   # DB側は大文字小文字を区別するため
@@ -84,6 +86,9 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
   
   private
   
