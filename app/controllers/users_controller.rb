@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     @users = User.where(activated: true).paginate(page: params[:page], per_page: 20)
   end
   
+  
   def show
     # params[:id]により、url
     @user = User.find(params[:id])

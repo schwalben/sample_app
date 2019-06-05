@@ -1,0 +1,7 @@
+<% provide(:title, @title) %>
+
+<% if @target == "users" %>
+  <%= render 'search_users' %>
+<% else %>
+  <%= render 'search_microposts' %>
+<% end %>
