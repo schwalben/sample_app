@@ -13,7 +13,7 @@ class PictureUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
-  # Choose what kind of storage to use for this uploader:
+  # Choose what kind of storage tohe use for this uploader:
   # storage :fog
 
   # Override the directory where uploaded files will be stored.

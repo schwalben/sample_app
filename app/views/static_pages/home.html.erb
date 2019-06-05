@@ -1,8 +1,11 @@
 <% if logged_in? %>
-
   <div class="row">
-    <%= render 'static_pages/micropost_area' %>
-    <%= render 'shared/feed' %>
+    <aside class="col-md-4">
+      <%= render 'static_pages/micropost_area' %>
+    </aside>
+    <div class="col-md-8">
+      <%= render 'shared/feed' %>
+    </div>
   </div>
   
 <% else %>
