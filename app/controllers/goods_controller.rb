@@ -15,6 +15,7 @@ class GoodsController < ApplicationController
   def create
     
     @micropost = Micropost.find(params[:micropost_id])
+    @user_id = @micropost.user_id
     user = current_user
 
     Good.create(micropost_id: @micropost.id, created_by_id: user.id)
@@ -29,6 +30,7 @@ class GoodsController < ApplicationController
 
   def destroy
     @micropost = Micropost.find(params[:micropost_id])
+    @user_id = @micropost.user_id
     user = current_user
     Good.find_by(micropost_id: @micropost.id, created_by_id: user.id).destroy
     
