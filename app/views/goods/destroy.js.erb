@@ -1,0 +1,2 @@
+$("#good_form-<%= @micropost.reload.id %>").html("<%= escape_javascript(render('microposts/good')) %>");
+$("#good_num").html("<%= Good.where(created_by_id: current_user.id).count %>");

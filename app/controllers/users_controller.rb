@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   before_action :logged_in_user, only: [:edit, :update, :index, :destroy, 
-                                        :following, :followers]
+                                        :following, :followers, :show]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: [:destroy]
   
@@ -14,7 +14,9 @@ class UsersController < ApplicationController
   def show
     # params[:id]により、url
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @microposts = @user.microposts.left_joins(:goods)
+        .where("goods.created_by_id = ? or goods.created_by_id is ? ", current_user.id, nil)
+          .select("microposts.*, goods.created_by_id").paginate(page: params[:page])
     redirect_to root_url and return unless @user.activated
   end
   

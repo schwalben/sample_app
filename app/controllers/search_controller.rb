@@ -27,7 +27,7 @@ class SearchController < ApplicationController
   
     def search_micropost
       @title = "Search Microposts"
-      @microposts = Micropost.where('content LIKE ?', "%#{params[:search_condition]}%").joins(:user).select("microposts.*, users.*").paginate(page: params[:page])
+      @microposts = Micropost.where('content LIKE ?', "%#{params[:search_condition]}%").joins(:user).left_joins(:goods).where("goods.created_by_id = ? or goods.created_by_id is ? ", current_user.id, nil).select("microposts.*, goods.created_by_id").paginate(page: params[:page])
       render('index')  
     end
 

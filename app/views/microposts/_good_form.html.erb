@@ -1,0 +1,10 @@
+
+<% @micropost = micropost %>
+<div id="good_form-<%= @micropost.id %>">
+  <div id="<% micropost.created_by_id %>"></div>
+  <% if !!@is_mine ? micropost.created_by_id.nil? : can_good?(current_user, micropost.id) %>
+    <%= render 'microposts/good' %>
+  <% else %>
+    <%= render 'microposts/ungood' %>
+  <% end %>
+</div>

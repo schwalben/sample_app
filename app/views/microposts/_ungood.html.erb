@@ -1,0 +1,4 @@
+<%= form_with url: goods_path, method: :delete, class: "form-inline" do |form| %>
+  <%= hidden_field_tag :micropost_id, @micropost.id %>
+  <%= form.submit "#{@micropost.goods_count} good", name: nil, class: "good_button btn-primary" %>
+<% end %> 

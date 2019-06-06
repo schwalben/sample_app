@@ -2,6 +2,7 @@ class User < ApplicationRecord
   
   # 複数形
   has_many :microposts, { dependent: :destroy }
+  
   has_many :active_relationships, {
               class_name: "Relationship",
               foreign_key: "follower_id",
@@ -16,6 +17,10 @@ class User < ApplicationRecord
   # throw -> 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  
+  has_many :goods
+  
+
   
   attr_accessor :remember_token, :activation_token, :reset_token
   
@@ -105,7 +110,7 @@ class User < ApplicationRecord
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids})
-                     OR user_id = :user_id", user_id: id)
+                     OR user_id = :user_id", user_id: id).left_joins(:goods).where("goods.created_by_id = ? or goods.created_by_id is ? ", id, nil).select("microposts.*, goods.created_by_id")
   end
   
   def follow(other_user)

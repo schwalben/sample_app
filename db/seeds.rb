@@ -31,3 +31,29 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+microposts = Micropost.all
+microposts.each_with_index { |micropost, i| 
+  if (i % 2 == 1)
+    Good.create(micropost_id: micropost.id, created_by_id: user.id)
+  end
+}
+
+second_user = users[1]
+microposts.each_with_index { |micropost, i| 
+  if (i % 2 == 0)
+    Good.create(micropost_id: micropost.id, created_by_id: second_user.id)
+  end
+}
+
+third_user = users[2]
+microposts.each_with_index { |micropost, i| 
+  if (i % 2 == 1)
+    Good.create(micropost_id: micropost.id, created_by_id: third_user.id)
+  end
+}
+
+microposts.each_with_index { |micropost, i| 
+    count = Good.find_by(micropost_id: micropost.id)
+    micropost.update(goods_count: count)
+}

@@ -12,4 +12,10 @@
     </strong>
     followers
   </a>
+  <a href="<%= user_goods_path(@user) %>">
+    <strong id="good_num" class="stat">
+      <%= Good.where(created_by_id: @user.id).count %>
+    </strong>
+    good
+  </a>
 </div>

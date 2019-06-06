@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190604204143) do
+ActiveRecord::Schema.define(version: 20190606183101) do
+
+  create_table "goods", force: :cascade do |t|
+    t.integer "micropost_id"
+    t.integer "created_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_goods_on_created_by_id"
+    t.index ["micropost_id", "created_by_id"], name: "index_goods_on_micropost_id_and_created_by_id", unique: true
+    t.index ["micropost_id"], name: "index_goods_on_micropost_id"
+  end
 
   create_table "microposts", force: :cascade do |t|
     t.text "content"
@@ -18,6 +28,7 @@ ActiveRecord::Schema.define(version: 20190604204143) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
+    t.integer "goods_count", default: 0, null: false
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
